@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  app:
+    # Can be build using `gradle jibDockerBuild`
+    image: portfolio:0.0.1-SNAPSHOT
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DATABASE_NAME:-portfolio}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USER:-portfolio}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD:-portfolio}
+    ports:
+      - "8088:8080"
+    depends_on:
+      - db
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:-portfolio}
+      - POSTGRES_USER=${DATABASE_USER:-portfolio}
+      - POSTGRES_DB=${DATABASE_NAME:-portfolio}
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_PASSWORD
+      interval: 2s
+      timeout: 1s
+      retries: 1
+      start_period: 5s
+volumes:
+  pgdata:

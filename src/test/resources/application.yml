@@ -1,0 +1,32 @@
+server:
+  port: 9999
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/portfolio
+    username: wojtek
+    password: wojtek
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+  flyway:
+    enabled: false
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: /swagger
+
+chaos:
+  monkey:
+    assaults:
+      latency-active: true
+      latency-range-start: 10
+      latency-range-end: 2000
+    watcher:
+      restController: true
+    enabled: false

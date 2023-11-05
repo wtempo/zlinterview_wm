@@ -1,0 +1,44 @@
+server:
+    port: 8080
+
+spring:
+    datasource:
+        url: ${SPRING_DATASOURCE_URL}
+        username: ${SPRING_DATASOURCE_USERNAME}
+        password: ${SPRING_DATASOURCE_PASSWORD}
+    jpa:
+        show-sql: true
+        generate-ddl: true
+        hibernate:
+            ddl-auto: update
+
+    flyway:
+        enabled: false
+springdoc:
+    api-docs:
+        enabled: true
+        path: /api-docs
+    swagger-ui:
+        path: /swagger
+
+chaos:
+    monkey:
+        assaults:
+            latency-active: true
+            latency-range-start: 10
+            latency-range-end: 2000
+        watcher:
+            restController: true
+        enabled: false
+
+logging:
+    level:
+        org:
+            springframework:
+                web:
+                    filter:
+                        CommonsRequestLoggingFilter: TRACE
+        com:
+            example:
+                portfolio:
+                    RequestLoggingFilterConfig: TRACE

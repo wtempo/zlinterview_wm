@@ -1,0 +1,5 @@
+TRUNCATE users CASCADE;
+TRUNCATE customer_offering CASCADE;
+TRUNCATE subscription CASCADE;
+TRUNCATE offering CASCADE;
+TRUNCATE customer CASCADE;
