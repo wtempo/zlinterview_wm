@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -32,13 +33,21 @@ public class CustomerOffering {
 
   @OneToMany(mappedBy = "customerOffering")
   @Where(clause = "active = true")
-  private Set<Subscription> activeSubscriptions;
+  @Builder.Default
+  private Set<Subscription> activeSubscriptions = new HashSet<>();
 
   public List<UUID> getSKUs() {
     return getOffering().getSKUs();
   }
 
-  public void throwIfSubscriptionLimitReached() throws SubscriptionLimitReachedException {
+  public void addSubscription(Subscription subscription) {
+    if (subscription.getActive()) {
+      throwIfSubscriptionLimitReached();
+      activeSubscriptions.add(subscription);
+    }
+  }
+
+  private void throwIfSubscriptionLimitReached() throws SubscriptionLimitReachedException {
     if (isSubscriptionLimitReached()) {
       throw new SubscriptionLimitReachedException(activeSubscriptionLimit, customer.getId(), offering.getId());
     }

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.UUID;
 
 @ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY, reason = "Subscription limit has been reached")
-
 public class SubscriptionLimitReachedException extends RuntimeException {
   public SubscriptionLimitReachedException(long limit, UUID customerId, UUID offeringId) {
     super(

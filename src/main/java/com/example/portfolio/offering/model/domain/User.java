@@ -32,10 +32,11 @@ public class User {
     if (!belongsToSameCustomer(customerOffering)) {
       throw new UserNotAssociatedWithCustomerException(id, customer.getId());
     }
+    var newSubscription = Subscription.newSubscriptionForUserId(customerOffering, this.id);
 
-    customerOffering.throwIfSubscriptionLimitReached();
+    customerOffering.addSubscription(newSubscription);
 
-    return Subscription.newSubscriptionForUserId(customerOffering, this.id);
+    return newSubscription;
   }
 
   public boolean belongsToSameCustomer(CustomerOffering customerOffering) {
