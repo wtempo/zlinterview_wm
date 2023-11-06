@@ -1,5 +1,6 @@
 package com.example.portfolio.billing.read;
 
+import com.example.portfolio.billing.model.BillingEvent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import lombok.AllArgsConstructor;
@@ -44,8 +45,8 @@ public class CustomerBillingService {
          GROUP BY customer_id;
         """, Tuple.class)
       .setParameter("customer_id", customerId)
-      .setParameter("start_type", "BILLING START")
-      .setParameter("end_type", "BILLING END")
+      .setParameter("start_type", BillingEvent.EventType.START.toString())
+      .setParameter("end_type", BillingEvent.EventType.END.toString())
       .getSingleResult();
 
     Tuple resultTuple = (Tuple) result;

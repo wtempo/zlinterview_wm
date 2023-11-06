@@ -61,9 +61,10 @@ public class BillingEventService {
     var event = BillingEvent
       .builder()
       .eventTime(subscriptionActivated.activatedAt())
-      .eventType("BILLING START")
+      .eventType(BillingEvent.EventType.START)
       .userId(subscriptionActivated.userId())
       .offeringId(subscriptionActivated.offeringId())
+      .customerId(subscriptionActivated.customerId())
       .correlationId(correlationId)
       .build();
 
@@ -74,9 +75,10 @@ public class BillingEventService {
     var event = BillingEvent
       .builder()
       .eventTime(subscriptionDeactivated.deactivatedAt())
-      .eventType("BILLING END")
+      .eventType(BillingEvent.EventType.END)
       .userId(subscriptionDeactivated.userId())
       .offeringId(subscriptionDeactivated.offeringId())
+      .customerId(subscriptionDeactivated.customerId())
       .correlationId(correlationId)
       .build();
 

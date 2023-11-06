@@ -1,9 +1,6 @@
 package com.example.portfolio.billing.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -24,5 +21,13 @@ public class BillingEvent {
   private UUID offeringId;
   private UUID customerId;
   private Instant eventTime;
-  private String eventType;
+
+  @Enumerated(EnumType.STRING)
+  private EventType eventType;
+
+  public enum EventType {
+    START,
+    END
+  }
+
 }
